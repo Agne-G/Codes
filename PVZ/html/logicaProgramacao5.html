@@ -1,0 +1,113 @@
+<canvas width="800" height="600"></canvas>
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext("2d");
+    var i=0;
+    var x = 0;
+    var y = 0;
+    var z = 0;
+    var rad = 0;
+    var count = 0;
+    var randX = 0;
+    var randY = 0;
+    
+
+    tela.onclick = function() {
+        x = event.pageX - tela.offsetLeft;
+        y = event.pageY - tela.offsetTop;
+        if((x>=290 && x<=310) && (y>=190 && y <=210)) {
+            alert("Acertou no alvo");
+        }
+    }
+
+    function limpaTela() {
+        pincel.clearRect(0,0,800,600);
+        pincel.fillStyle = "lightgrey";
+        pincel.fillRect(0,0,800,600);
+    }
+    
+    function desenhaBolinha() {
+        pincel.fillStyle = "blue";
+        pincel.beginPath();
+        pincel.arc(x,y,10+rad,0,2*Math.PI);
+        pincel.fill();
+    }
+/*
+    function moveBolinha() {        
+        limpaTela();
+        x = rotaX();
+        y = rotaY();
+        desenhaBolinha();
+        //console.log(randX + " e " + randY);
+    }
+   
+    function rotaX() {    
+        if (x == 0) {
+            x = randX = 20;
+        } else if (x == randX) {
+            randX = Math.round(Math.random()*790+10);
+        } else if (randX > x) {
+            x++;
+        } else if (randX < x) {
+            x--;
+        }
+        return x;
+    }
+    
+    function rotaY() {    
+        if (y == 0) {
+            y = 200;
+            randY = 200;
+        } else if (y == randY) {
+            randY = Math.round(Math.random()*590+10);
+        } else if (randY > y) {
+            y++;
+        } else if (randY < y) {
+            y--;
+        }
+        //console.log(randY);
+        return y;
+    }
+    setInterval(moveBolinha, 1);
+    */
+    function tamanhoBolinha() {
+        if (!(z/20 < 1)) {
+            rad = (20 - z%20);
+        } else {
+            rad = z;
+        }
+        z = (z + 1)%40;
+        //console.log(rad);
+        return rad;
+    }
+
+    limpaTela();
+
+    document.onkeydown = function() {
+        switch(event.keyCode){
+            case 37:
+                x += -10;    
+            //alert("esqueda");
+                break;
+            case 38:
+                y += -10;    
+            //alert("up");
+                break;
+            case 39:
+                x += 10;    
+            //alert("right");
+                break;
+            case 40:
+                y += 10    
+            //alert("down");
+                break;
+            case 16:
+                tamanhoBolinha();
+                break;
+        }
+        limpaTela();
+        desenhaBolinha();
+    }
+   
+</script>

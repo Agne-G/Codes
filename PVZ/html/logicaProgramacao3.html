@@ -1,0 +1,95 @@
+<canvas width="600" height="400"></canvas>
+<br>Escolha uma cor<input id="cor" type="color">
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext("2d");
+    var i=0;
+    var cores = ["blue","red","green"];
+    var downUp = false;
+    var x;
+    var y;
+    var cor;
+    
+    pincel.fillStyle = "lightgrey";
+    pincel.fillRect(0,0,600,400);
+    
+    pincel.fillStyle = "red";
+    pincel.beginPath();
+    pincel.arc(300,200,30,0,2*3.14);
+    pincel.fill();
+    pincel.fillStyle = "white";
+    pincel.beginPath();
+    pincel.arc(300,200,20,0,2*3.14);
+    pincel.fill();
+    pincel.fillStyle = "red";
+    pincel.beginPath();
+    pincel.arc(300,200,10,0,2*3.14);
+    pincel.fill();
+    //console.log(event);
+    setBotaoCores();
+
+    function setBotaoCores() {
+        pincel.fillStyle = cores[i];
+        pincel.fillRect(5,5,50,50);
+        pincel.strokeStyle = "black";
+        pincel.strokeRect(5,5,50,50);
+    }
+
+    tela.onclick = function() {
+        x = event.pageX - tela.offsetLeft;
+        y = event.pageY - tela.offsetTop;
+        if((x>=290 && x<=310) && (y>=190 && y <=210)) {
+            alert("Acertou no alvo");
+        }
+        //alert(x + " and" + y);
+    }
+
+    
+
+    /*
+    tela.onmousemove = function(event) {
+
+        x = event.pageX - tela.offsetLeft;
+        y = event.pageY - tela.offsetTop;
+            
+        if (!((x>=0 && x <= 65) && (y>=0 && y<=65)) && downUp) {
+            if (event.shiftKey) {
+                pincel.fillStyle = cores[i];
+                pincel.beginPath();
+                pincel.arc(x,y,30,0,2*3.14);
+                pincel.fill();
+                pincel.fillStyle = "white";
+                pincel.beginPath();
+                pincel.arc(x,y,20,0,2*3.14);
+                pincel.fill();
+            }
+            pincel.fillStyle = cores[i];
+            pincel.beginPath();
+            pincel.arc(x,y,10,0,2*3.14);
+            pincel.fill();
+            console.log(event);
+        }            
+    }
+    
+    tela.onclick = function() {
+        if (((x>=5 && x <= 55) && (y>=5 && y<=55))) {        
+            //pincel.fillStyle = cores[i];
+            cor = document.querySelector("input").value;
+            i = (i+1)%3;
+            cores[i] = cor;
+            setBotaoCores(); 
+            //alert(cor);             
+        }
+        
+    }
+    
+    tela.onmousedown = function() {
+        downUp = true;
+    }
+
+    tela.onmouseup = function() {
+        downUp = false;
+    }   
+    */     
+</script>

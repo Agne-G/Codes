@@ -1,0 +1,115 @@
+<canvas width="800" height="600"></canvas>
+<script>
+
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext("2d");
+    var x = 0;
+    var y = 0;
+    var z = 0;
+    var a = 0;
+    var b = 0;
+    var rad;
+    var randX = 0;
+    var randY = 0;
+    var score = 0;
+    var miss = 0;
+    
+
+    tela.onclick = function() {
+        a = event.pageX - tela.offsetLeft;
+        b = event.pageY - tela.offsetTop;
+        countScore();
+        //alert("x:" + x + " a:" + a + " y:" + y + " b:" + b);
+    }
+
+    function countScore() {
+        if((a>=(x-30) && a<=(x+30)) && (b>=(y-30) && b<=y+30)) {
+            score++;
+        }
+        else {
+            miss++;
+        }
+    }
+
+    function displayScore() {
+        pincel.font = "30px Comic Sans MS"    ;
+        pincel.fillStyle = "green";
+        pincel.textAlign = "center";
+        pincel.fillText(score, 30, 40);
+        pincel.fillStyle = "red";
+        pincel.fillText(miss, 70,40);
+    }
+
+    function limpaTela() {
+        pincel.clearRect(0,0,800,600);
+        pincel.fillStyle = "lightgrey";
+        pincel.fillRect(0,0,800,600);
+    }
+
+    function desenhaCenario () {
+        limpaTela();
+        x = rotaX();
+        y = rotaY();
+        desenhaBolinha();
+        displayScore();
+        //console.log(randX + " e " + randY);
+    }
+    
+    function desenhaBolinha() {
+        pincel.fillStyle = "red";
+        pincel.beginPath();
+        pincel.arc(x,y,30,0,2*Math.PI);
+        pincel.fill();
+        pincel.fillStyle = "lightgrey";
+        pincel.beginPath();
+        pincel.arc(x,y,20,0,2*Math.PI);
+        pincel.fill();
+        pincel.fillStyle = "red";
+        pincel.beginPath();
+        pincel.arc(x,y,10,0,2*Math.PI);
+        pincel.fill();
+    }
+
+    function rotaX() {    
+        if (x == 0) {
+            x = randX = 20;
+        } else if (x == randX) {
+            randX = Math.round(Math.random()*790+10);
+        } else if (randX > x) {
+            x++;
+        } else if (randX < x) {
+            x--;
+        }
+        return x;
+    }
+    
+    function rotaY() {    
+        if (y == 0) {
+            y = 200;
+            randY = 200;
+        } else if (y == randY) {
+            randY = Math.round(Math.random()*590+10);
+        } else if (randY > y) {
+            y++;
+        } else if (randY < y) {
+            y--;
+        }
+        console.log("randX:", x, " randY:", y);
+        return y;
+    }
+
+    function tamanhoBolinha() {
+        if (!(z/20 < 1)) {
+            rad = (20 - z%20);
+        } else {
+            rad = z;
+        }
+        z = (z + 1)%40;
+        //console.log(rad);
+        return rad;
+    }
+
+    //setInterval(tamanhoBolinha, 50);
+    setInterval(desenhaCenario, 1);
+   
+</script>
